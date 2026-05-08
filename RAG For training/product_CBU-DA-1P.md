@@ -76,7 +76,7 @@ not_suitable_for:
   - "Driver không hỗ trợ DALI (chỉ có 0-10V hoặc Triac)"
   - "Dùng độc lập không có DALI bus"
   - "Hệ thống cần điều khiển trên 50 driver trong một network"
-  - "Ứng dụng không có smartphone hoặc tablet để vận hành Casambi App"
+
 
 # ================================================================
 # BLOCK 5 — CHATBOT BEHAVIOR
