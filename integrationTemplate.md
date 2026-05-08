@@ -285,3 +285,4 @@ Khi khách hỏi về tích hợp [ECOSYSTEM] với hệ khác:
 5. Nếu câu hỏi phức tạp (nhiều hệ, dự án lớn) → handoff sang sales/kỹ thuật KNXStore.
 
 Không đoán mò khả năng tích hợp nếu không có trong file này — trả lời "Trường hợp này cần xác nhận thêm, liên hệ KNXStore để được tư vấn cụ thể."
+
