@@ -122,8 +122,9 @@ accessories_recommended: []
 # VD: ["DALI-2 motion sensors", "DALI-2 push button inputs"]
 
 compare_with_skus: []
-# SKU cùng loại để chatbot biết khi khách hỏi "nên chọn cái nào?"
-# VD: ["CBU-DA-4", "CBU-TED"] — điền SKU của sản phẩm cạnh tranh nội bộ
+# SKU cùng loại để chatbot tự tổng hợp so sánh khi khách hỏi "nên chọn cái nào?"
+# Chatbot retrieve file từng SKU này và tự tạo bảng so sánh — không cần bảng cứng trong file
+# VD: ["CBU-DCS", "SAL-1016"]
 
 bundle_with: []
 upsell_to: []
@@ -305,15 +306,6 @@ confidence_level: "high"         # high | medium | low
 
 - [Giới hạn 1 — thành thật, tránh over-promise]
 - [Giới hạn 2]
-
-### So sánh với sản phẩm tương tự
-
-| | [Model này] | [Model A] | [Model B] |
-|:---|:---|:---|:---|
-| [Tiêu chí 1] | | | |
-| [Tiêu chí 2] | | | |
-| [Tiêu chí 3] | | | |
-| Phù hợp nhất cho | | | |
 
 ---
 
