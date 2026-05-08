@@ -90,29 +90,19 @@ not_suitable_for: []
 chatbot_priority: "high"         # high | medium | low
 
 # --- GIÁ SẢN PHẨM ---
-# Chatbot fetch giá từ website_url khi cần. Có 3 trạng thái:
+# Giá KHÔNG lưu trong file — chatbot fetch live từ website_url mỗi lần khách hỏi.
+# Lý do: giá thay đổi thường xuyên, hardcode sẽ bị stale.
 price_display: "fetch"
-# fetch       → chatbot tự lấy giá từ website_url khi khách hỏi
-# hidden      → không hiển thị giá, luôn redirect sang sales
-# contact_only → hiển thị "Liên hệ báo giá", không fetch
+# fetch        → chatbot gọi web_fetch lên website_url, lấy giá hiển thị live
+# contact_only → không fetch, hiển thị "Liên hệ báo giá" (dùng khi sản phẩm POA)
 
 # --- FORMAT HIỂN THỊ ---
 # Flowise widget mặc định chỉ render Markdown — không có card UI native.
-# Chatbot dùng Markdown để render product info theo 2 mode:
 display_mode_technical: "text"
 # Khi hỏi kỹ thuật → trả lời text + link datasheet + link sản phẩm
 
 display_mode_purchase: "markdown_card"
-# Khi tư vấn mua → render Markdown card gồm: ảnh, tên, giá/liên hệ, link
-
-# Format Markdown card chuẩn (chatbot dùng template này):
-# ---
-# ![Tên sản phẩm](image_url)
-# **[BRAND MODEL – Tên ngắn](website_url)**
-# [Mô tả 1 dòng]
-# 💰 [Giá nếu có] | 📦 Make to order
-# 👉 [Xem sản phẩm](website_url) | 📞 [Liên hệ báo giá](https://knxstore.vn/contact)
-# ---
+# Khi tư vấn mua → fetch giá live rồi render Markdown card
 
 product_link_text: ""
 # VD: "👉 [Olfer CBU-DA-1P – Bộ điều khiển DALI Casambi](https://knxstore.vn/products/...)"
@@ -426,28 +416,19 @@ Trả lời xong, kết thúc bằng 1 dòng:
 
 ### Khi tư vấn mua hàng — render Markdown card
 
-**Bước 1 — Lấy giá:** Truy cập `website_url` để lấy giá hiển thị trên trang.
-- Nếu tìm thấy giá → hiển thị kèm "Giá đã bao gồm VAT".
-- Nếu không có hoặc "Make to order" → hiển thị "Liên hệ báo giá".
+**Bước 1 — Fetch giá live:** Gọi `web_fetch` lên `website_url` để lấy giá hiện tại.
+- Tìm thấy giá → hiển thị kèm "Giá đã bao gồm VAT".
+- Không tìm thấy hoặc "Make to order" → hiển thị "Liên hệ báo giá".
+- Lý do fetch live: giá thay đổi thường xuyên, không lưu giá trong file knowledge.
 
 **Bước 2 — Render theo format chuẩn:**
 
-Khi có giá:
 ```
-![TÊN](IMAGE_URL)
+![TÊN SẢN PHẨM](IMAGE_URL)
 **[BRAND MODEL – Tên ngắn](WEBSITE_URL)**
 Mô tả 1 dòng — chức năng chính, phù hợp với ai.
-💰 GIÁ (Giá đã bao gồm VAT)
-👉 [Xem sản phẩm](WEBSITE_URL) | 📞 [Nhận báo giá](https://knxstore.vn/contact)
-```
-
-Khi không có giá / Make to order:
-```
-![TÊN](IMAGE_URL)
-**[BRAND MODEL – Tên ngắn](WEBSITE_URL)**
-Mô tả 1 dòng — chức năng chính, phù hợp với ai.
-💰 Liên hệ báo giá
-👉 [Xem sản phẩm](WEBSITE_URL) | 📞 [Nhận báo giá](https://knxstore.vn/contact)
+💰 [GIÁ FETCH LIVE] (Giá đã bao gồm VAT) | hoặc: 💰 Liên hệ báo giá
+👉 [Xem sản phẩm](WEBSITE_URL) | 📞 [Nhận báo giá](https://zalo.me/0918918755)
 ```
 
 ### Khi khách hỏi báo giá dự án
