@@ -10,7 +10,7 @@
 # ================================================================
 # BLOCK 1 — IDENTIFICATION (bắt buộc)
 # ================================================================
-sku: ""                          # VD: "CBU-DA-1P"
+sku: ""                          # Lấy từ cột sku_extracted trong casambi_full_sku.csv
 product_name: ""                 # Tên đầy đủ VD: "Olfer CBU-DA-1P DALI Controller"
 brand: ""                        # VD: "Olfer" | "Schneider" | "MDT" | "Casambi"
 manufacturer_part_number: ""
@@ -88,24 +88,48 @@ not_suitable_for: []
 # BLOCK 5 — CHATBOT BEHAVIOR (bắt buộc)
 # ================================================================
 chatbot_priority: "high"         # high | medium | low
-display_mode_technical: "text"   # Khi hỏi kỹ thuật → trả lời text + link
-display_mode_purchase: "card"    # Khi tư vấn mua → hiện product card
 
-# Format link chuẩn để chatbot dùng:
+# --- GIÁ SẢN PHẨM ---
+# Chatbot fetch giá từ website_url khi cần. Có 3 trạng thái:
+price_display: "fetch"
+# fetch       → chatbot tự lấy giá từ website_url khi khách hỏi
+# hidden      → không hiển thị giá, luôn redirect sang sales
+# contact_only → hiển thị "Liên hệ báo giá", không fetch
+
+# --- FORMAT HIỂN THỊ ---
+# Flowise widget mặc định chỉ render Markdown — không có card UI native.
+# Chatbot dùng Markdown để render product info theo 2 mode:
+display_mode_technical: "text"
+# Khi hỏi kỹ thuật → trả lời text + link datasheet + link sản phẩm
+
+display_mode_purchase: "markdown_card"
+# Khi tư vấn mua → render Markdown card gồm: ảnh, tên, giá/liên hệ, link
+
+# Format Markdown card chuẩn (chatbot dùng template này):
+# ---
+# ![Tên sản phẩm](image_url)
+# **[BRAND MODEL – Tên ngắn](website_url)**
+# [Mô tả 1 dòng]
+# 💰 [Giá nếu có] | 📦 Make to order
+# 👉 [Xem sản phẩm](website_url) | 📞 [Liên hệ báo giá](https://knxstore.vn/contact)
+# ---
+
 product_link_text: ""
 # VD: "👉 [Olfer CBU-DA-1P – Bộ điều khiển DALI Casambi](https://knxstore.vn/products/...)"
 
+# --- HANDOFF RULES ---
 handoff_to_sales_when:
-  - "user_asks_price"
   - "user_asks_stock"
   - "user_asks_quotation"
   - "user_asks_discount"
   - "user_asks_lead_time"
   - "user_asks_payment_terms"
   - "user_asks_delivery"
+  - "user_asks_project_quote"       # Báo giá dự án → thu thập info rồi handoff
   - "user_mentions_project_above_50_units"
   - "user_asks_custom_integration"
   - "user_asks_warranty_claim"
+# Lưu ý: "user_asks_price" KHÔNG còn trong danh sách này vì chatbot sẽ tự fetch giá
 # Thêm trigger đặc thù nếu có
 
 # ================================================================
@@ -390,18 +414,57 @@ Giá và tình trạng hàng cập nhật theo từng thời điểm. Vui lòng 
 ## Hiển thị sản phẩm
 
 <!--
-  Section này cho chatbot biết CÁCH và KHI NÀO hiển thị link sản phẩm.
-  Không xóa section này — chatbot cần đọc để biết format chuẩn.
+  Section này cho chatbot biết CÁCH và KHI NÀO hiển thị sản phẩm.
+  Không xóa — chatbot đọc để biết format và logic giá.
+  Flowise widget mặc định chỉ render Markdown, không có card UI native.
 -->
 
-**Khi trả lời câu hỏi kỹ thuật**, kết thúc bằng:
-> 📄 Thông tin kỹ thuật đầy đủ: [Link datasheet] | 🛒 [Xem sản phẩm trên KNXStore](URL)
+### Khi trả lời câu hỏi kỹ thuật
 
-**Khi tư vấn mua hàng**, hiển thị product card với:
-- Tên sản phẩm: [BRAND] [MODEL] – [Tên ngắn]
-- Mô tả 1 dòng: [Short description VI]
-- Link: [website_url]
-- CTA: "Liên hệ báo giá" (không hiển thị giá)
+Trả lời xong, kết thúc bằng 1 dòng:
+> 📄 [Datasheet](DATASHEET_URL) | 🛒 [Xem sản phẩm trên KNXStore](WEBSITE_URL)
+
+### Khi tư vấn mua hàng — render Markdown card
+
+**Bước 1 — Lấy giá:** Truy cập `website_url` để lấy giá hiển thị trên trang.
+- Nếu tìm thấy giá → hiển thị kèm "Giá đã bao gồm VAT".
+- Nếu không có hoặc "Make to order" → hiển thị "Liên hệ báo giá".
+
+**Bước 2 — Render theo format chuẩn:**
+
+Khi có giá:
+```
+![TÊN](IMAGE_URL)
+**[BRAND MODEL – Tên ngắn](WEBSITE_URL)**
+Mô tả 1 dòng — chức năng chính, phù hợp với ai.
+💰 GIÁ (Giá đã bao gồm VAT)
+👉 [Xem sản phẩm](WEBSITE_URL) | 📞 [Nhận báo giá](https://knxstore.vn/contact)
+```
+
+Khi không có giá / Make to order:
+```
+![TÊN](IMAGE_URL)
+**[BRAND MODEL – Tên ngắn](WEBSITE_URL)**
+Mô tả 1 dòng — chức năng chính, phù hợp với ai.
+💰 Liên hệ báo giá
+👉 [Xem sản phẩm](WEBSITE_URL) | 📞 [Nhận báo giá](https://knxstore.vn/contact)
+```
+
+### Khi khách hỏi báo giá dự án
+
+Thu thập trước khi handoff sang sales:
+- Loại công trình (văn phòng, khách sạn, căn hộ, trường học...)
+- Quy mô (số phòng / số zone / diện tích)
+- Hệ thống dự kiến (Casambi, KNX, DALI...)
+- Thời gian triển khai dự kiến
+
+Sau đó handoff với message chuẩn:
+> "Cảm ơn bạn đã cung cấp thông tin. Giá dự án phụ thuộc vào số lượng và loại khách hàng nên đội ngũ KNXStore sẽ tư vấn trực tiếp để đảm bảo bạn nhận được mức giá tốt nhất.
+>
+> 👉 Liên hệ sales qua Zalo: **[0918.918.755](https://zalo.me/0918918755)**
+> hoặc để lại số điện thoại / email, KNXStore sẽ chủ động liên hệ lại."
+
+Lưu ý cho chatbot: không tự estimate giá dự án, không gợi ý mức chiết khấu cụ thể — mọi thông tin giá dự án do sales quyết định.
 
 ---
 
