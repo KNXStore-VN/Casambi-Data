@@ -180,6 +180,7 @@ source_of_truth: "knxstore.vn product page + knxstore.vn/assets/image/catalog/"
 confidence_level: "high"
 ---
 
+
 # Olfer CBU-DA-1P – Bộ điều khiển DALI Casambi
 
 ## Tổng quan sản phẩm
@@ -362,7 +363,7 @@ Không. Casambi hoạt động hoàn toàn qua Bluetooth Mesh — điều khiể
 Có, theo hai cách: DT8 TW (driver hỗ trợ DALI DT8 — điều khiển nhiệt độ màu trực tiếp qua DALI) hoặc DT6 TW (dùng 2 kênh DT6 riêng cho Warm/Cool). Dải nhiệt độ màu hỗ trợ từ 2200K đến 7000K tùy driver.
 
 **Sự khác biệt giữa CBU-DA-1P và CBU-DCS là gì?**
-CBU-DA-1P hỗ trợ tối đa 50 driver, CBU-DCS hỗ trợ tối đa 64 driver. Cả hai đều dùng Casambi và hỗ trợ DALI DT6/DT8. Với dự án nhỏ đến vừa (< 50 driver), CBU-DA-1P là lựa chọn tiêu chuẩn.
+CBU-DA-1P hỗ trợ tối đa 50 driver DALI của đèn, CBU-DCS hoạt dộng hoàn toàn khác CBU-DCS sẽ nằm trong mạng casambi, biến tất cả các node casambi thành địa chỉ DALI, chức năng hoàn  toàn khác nhau
 
 **Cảm biến DALI-2 có hoạt động với CBU-DA-1P không?**
 Có. Khi chọn Fixture Profile có "Ext. Presence", "Ext. Light" hoặc "Ext. Sensors", cảm biến DALI-2 trên bus sẽ xuất hiện như Casambi sensor trong App. Bạn có thể thiết lập automation hoàn toàn trong Casambi.
@@ -374,54 +375,3 @@ Có, thông qua gateway KNX–Casambi (VD: VBU-K2C-W-BI). KNX gửi lệnh đế
 Vui lòng liên hệ KNXStore để được báo giá chính xác và kiểm tra tồn kho.
 👉 Zalo: [0918.918.755](https://zalo.me/0918918755)
 
----
-
-## Hiển thị sản phẩm
-
-### Khi trả lời câu hỏi kỹ thuật
-
-> 📄 [Datasheet CBU-DA-1P](https://knxstore.vn/assets/image/catalog/DALI_Casambi_Olfer_CBU-DA-1P_KNXStore_vn.pdf) | 📄 [Fixture Profiles](https://knxstore.vn/assets/image/catalog/CBU-DA-1P_Casambi_fixture_profiles_EN-V1_2_KNXStore_vn.pdf) | 🛒 [Xem sản phẩm trên KNXStore](https://knxstore.vn/products/casambi-bo-dieu-khien-dali-cbu-da-1p)
-
-### Khi tư vấn mua hàng — render Markdown card
-
-Khi có giá:
-```
-![Olfer CBU-DA-1P](https://knxstore.vn/assets/image/product/casambi-bo-dieu-khien-dali-cbu-da-1p_10.jpg)
-**[Olfer CBU-DA-1P – Bộ điều khiển DALI Casambi](https://knxstore.vn/products/casambi-bo-dieu-khien-dali-cbu-da-1p)**
-DALI master tích hợp Casambi BLE, điều khiển tối đa 50 driver, hỗ trợ DT6/DT8/TW/RGB/RGBW.
-💰 [GIÁ FETCH TỪ TRANG] (Giá đã bao gồm VAT)
-👉 [Xem sản phẩm](https://knxstore.vn/products/casambi-bo-dieu-khien-dali-cbu-da-1p) | 📞 [Nhận báo giá](https://zalo.me/0918918755)
-```
-
-Khi không có giá / Make to order:
-```
-![Olfer CBU-DA-1P](https://knxstore.vn/assets/image/product/casambi-bo-dieu-khien-dali-cbu-da-1p_10.jpg)
-**[Olfer CBU-DA-1P – Bộ điều khiển DALI Casambi](https://knxstore.vn/products/casambi-bo-dieu-khien-dali-cbu-da-1p)**
-DALI master tích hợp Casambi BLE, điều khiển tối đa 50 driver, hỗ trợ DT6/DT8/TW/RGB/RGBW.
-💰 Liên hệ báo giá
-👉 [Xem sản phẩm](https://knxstore.vn/products/casambi-bo-dieu-khien-dali-cbu-da-1p) | 📞 [Nhận báo giá](https://zalo.me/0918918755)
-```
-
-### Khi khách hỏi báo giá dự án
-
-Thu thập: loại công trình, quy mô, hệ thống dự kiến, thời gian triển khai. Sau đó:
-
-> "Cảm ơn bạn đã cung cấp thông tin. Giá dự án phụ thuộc vào số lượng và loại khách hàng nên đội ngũ KNXStore sẽ tư vấn trực tiếp để đảm bảo bạn nhận được mức giá tốt nhất.
->
-> 👉 Liên hệ sales qua Zalo: **[0918.918.755](https://zalo.me/0918918755)**
-> hoặc để lại số điện thoại / email, KNXStore sẽ chủ động liên hệ lại."
-
----
-
-## Tài liệu kỹ thuật
-
-📄 [Datasheet – Olfer CBU-DA-1P](https://knxstore.vn/assets/image/catalog/DALI_Casambi_Olfer_CBU-DA-1P_KNXStore_vn.pdf)
-📄 [Fixture Profile Reference – CBU-DA-1P](https://knxstore.vn/assets/image/catalog/CBU-DA-1P_Casambi_fixture_profiles_EN-V1_2_KNXStore_vn.pdf)
-🛒 [Trang sản phẩm KNXStore](https://knxstore.vn/products/casambi-bo-dieu-khien-dali-cbu-da-1p)
-
----
-
-## Bảo hành & Hỗ trợ
-
-- Bảo hành: 24 tháng từ ngày xuất hóa đơn
-- Hỗ trợ kỹ thuật: knxstore.vn hoặc Zalo [0918.918.755](https://zalo.me/0918918755)
